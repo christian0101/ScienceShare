@@ -32,3 +32,4 @@ Route::get('/enclosures/{animal?}', function ($animal = null) {
 });
 
 Route::redirect('/here', '/home');
+
