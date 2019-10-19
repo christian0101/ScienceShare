@@ -12,8 +12,6 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 3)->create();
-
         for ($i = 0; $i < 5; $i++) {
             $post = new Post;
             $post->user_id = App\User::pluck('id')->random();
