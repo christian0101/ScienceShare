@@ -3,7 +3,7 @@
 use App\Post;
 use Illuminate\Database\Seeder;
 
-class PostTableSeeder extends Seeder
+class PostsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,9 +12,12 @@ class PostTableSeeder extends Seeder
      */
     public function run()
     {
+        factory(App\User::class, 3)->create();
+
         for ($i = 0; $i < 5; $i++) {
             $post = new Post;
-            $post->author = "Foo $i";
+            $post->user_id = App\User::pluck('id')->random();
+            $post->title = "Title $i";
             $post->text = "Foo bar $i, bar foo";
             $post->save();
         }

@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Comment' => $baseDir . '/app/Comment.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -29,6 +30,8 @@ return array(
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
     'App\\User' => $baseDir . '/app/User.php',
+    'App\\View' => $baseDir . '/app/View.php',
+    'App\\Vote' => $baseDir . '/app/Vote.php',
     'Carbon\\Carbon' => $vendorDir . '/nesbot/carbon/src/Carbon/Carbon.php',
     'Carbon\\CarbonImmutable' => $vendorDir . '/nesbot/carbon/src/Carbon/CarbonImmutable.php',
     'Carbon\\CarbonInterface' => $vendorDir . '/nesbot/carbon/src/Carbon/CarbonInterface.php',
@@ -63,6 +66,7 @@ return array(
     'Carbon\\Traits\\Units' => $vendorDir . '/nesbot/carbon/src/Carbon/Traits/Units.php',
     'Carbon\\Traits\\Week' => $vendorDir . '/nesbot/carbon/src/Carbon/Traits/Week.php',
     'Carbon\\Translator' => $vendorDir . '/nesbot/carbon/src/Carbon/Translator.php',
+    'CommentsTableSeeder' => $baseDir . '/database/seeds/CommentsTableSeeder.php',
     'Cron\\AbstractField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/AbstractField.php',
     'Cron\\CronExpression' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/CronExpression.php',
     'Cron\\DayOfMonthField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/DayOfMonthField.php',
@@ -2612,7 +2616,7 @@ return array(
     'PhpParser\\Parser\\Tokens' => $vendorDir . '/nikic/php-parser/lib/PhpParser/Parser/Tokens.php',
     'PhpParser\\PrettyPrinterAbstract' => $vendorDir . '/nikic/php-parser/lib/PhpParser/PrettyPrinterAbstract.php',
     'PhpParser\\PrettyPrinter\\Standard' => $vendorDir . '/nikic/php-parser/lib/PhpParser/PrettyPrinter/Standard.php',
-    'PostTableSeeder' => $baseDir . '/database/seeds/PostTableSeeder.php',
+    'PostsTableSeeder' => $baseDir . '/database/seeds/PostsTableSeeder.php',
     'Prophecy\\Argument' => $vendorDir . '/phpspec/prophecy/src/Prophecy/Argument.php',
     'Prophecy\\Argument\\ArgumentsWildcard' => $vendorDir . '/phpspec/prophecy/src/Prophecy/Argument/ArgumentsWildcard.php',
     'Prophecy\\Argument\\Token\\AnyValueToken' => $vendorDir . '/phpspec/prophecy/src/Prophecy/Argument/Token/AnyValueToken.php',
