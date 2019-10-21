@@ -14,6 +14,9 @@ class DatabaseSeeder extends Seeder
         // seed test data
         $this->call(UsersTableSeeder::class);
         $this->call(PostsTableSeeder::class);
+        $this->call(TagsTableSeeder::class);
         $this->call(CommentsTableSeeder::class);
+        $this->call(VotesTableSeeder::class);
+        $this->call(ViewsTableSeeder::class);
     }
 }

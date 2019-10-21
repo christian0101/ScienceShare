@@ -3,22 +3,38 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Post extends Model
 {
+    use Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title', 'content',
+    ];
+
     public function user() {
-      return $this->hasOne('App\User');
+        return $this->belongsTo('App\User');
+    }
+
+    public function tags() {
+        return $this->belongsToMany('App\Tags');
     }
 
     public function comments() {
-      return $this->belongsToMany('App\Comment');
+        return $this->hasMany('App\Comment');
     }
 
     public function views() {
-      return $this->belongsToMany('App\View');
+        return $this->hasMany('App\View');
     }
 
     public function votes() {
-      return $this->belongsTo('App\Vote');
+        return $this->hasMany('App\Vote');
     }
 }

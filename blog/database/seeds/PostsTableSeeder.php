@@ -16,7 +16,7 @@ class PostsTableSeeder extends Seeder
             $post = new Post;
             $post->user_id = App\User::pluck('id')->random();
             $post->title = "Title $i";
-            $post->text = "Foo bar $i, bar foo";
+            $post->content = "Foo bar $i, bar foo";
             $post->save();
         }
 
