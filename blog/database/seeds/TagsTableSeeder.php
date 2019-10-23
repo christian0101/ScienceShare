@@ -13,7 +13,15 @@ class TagsTableSeeder extends Seeder
     public function run()
     {
         factory(App\Tag::class, 30)->make()->each(function ($tag) {
-            Tag::firstOrCreate(['name' => $tag->name], ['name' => $tag->name]);
+            $new_tag = Tag::firstOrNew(
+              ['name' => $tag->name],
+              ['name' => $tag->name]
+            );
+
+            if (!$new_tag->exists) {
+              $new_tag->save();
+              $new_tag->posts()->attach(App\Post::pluck('id')->random());
+            }
         });
     }
 }

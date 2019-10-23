@@ -17,7 +17,8 @@ class VotesTableSeeder extends Seeder
             Vote::firstOrCreate(
             [
               'user_id' => $vote->user_id,
-              'post_id' => $vote->post_id],
+              'post_id' => $vote->post_id
+            ],
             [
               'user_id' => $vote->user_id,
               'post_id' => $vote->post_id,
