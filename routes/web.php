@@ -11,6 +11,8 @@
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -21,6 +23,7 @@ Route::get('/home', function () {
 
 Route::get('blog', 'PostController@index');
 Route::get('blog/post/{id}', 'PostController@show')->name('posts.show');
+Route::redirect('/posts', 'blog');
 
 Route::get('/home/{name?}', function ($name = null) {
     return "This is $name's /home page";
