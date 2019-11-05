@@ -18,23 +18,28 @@ class Post extends Model
         'title', 'content',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
 
-    public function tags() {
+    public function tags()
+    {
         return $this->belongsToMany('App\Tag');
     }
 
-    public function comments() {
+    public function comments()
+    {
         return $this->hasMany('App\Comment');
     }
 
-    public function views() {
+    public function views()
+    {
         return $this->hasMany('App\View');
     }
 
-    public function votes() {
+    public function votes()
+    {
         return $this->hasMany('App\Vote');
     }
 }

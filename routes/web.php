@@ -13,9 +13,7 @@
 
 Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', 'blog');
 
 Route::get('/home', function () {
     return "This is the /home page";
