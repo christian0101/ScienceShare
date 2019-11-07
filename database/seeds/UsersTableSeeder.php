@@ -12,6 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        // make sure at least one user exists
         $user = new User;
         $user->name = 'admin';
         $user->email = 'cristian9613@live.com';

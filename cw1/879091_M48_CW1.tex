@@ -4,41 +4,32 @@
 \usepackage{graphicx}			
 \usepackage{amssymb}
 \usepackage{caption}
-\usepackage{float}
 \usepackage{gensymb}
 \PassOptionsToPackage{hyphens}{url}\usepackage[hidelinks]{hyperref}
 \frenchspacing
 \usepackage{lmodern}  % for bold teletype font
 \usepackage{amsmath}  % for \hookrightarrow
+
 \usepackage{listings,xcolor}
 \definecolor{purple}{HTML}{B100A7}
 \definecolor{cred}{HTML}{E35C75}
 \definecolor{dkgreen}{rgb}{0,.6,0}
 \definecolor{dkblue}{rgb}{0,0,.6}
 \definecolor{dkyellow}{cmyk}{0,0,.8,.3}
+
 \lstset{
-  language        = Java,
+  language        = PHP,
   basicstyle      = \small\ttfamily,
-  keywordstyle    = \color{cred},
+  keywordstyle    = \color{purple},
   stringstyle     = \color{dkgreen},
   commentstyle    = \color{gray},
-  otherkeywords={$},
-  alsoother     = $\@,
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
   %identifierstyle = \color{dkyellow},
-  emph            =[1]{require_once, require, include_once, include, namespace, use, class, function, new},
-  emphstyle       =[1]\color{purple},%\bf,
-  emph            =[2]{echo, empty, isset, array, instanceof},
-  emphstyle       =[2]\color{cred},%\bf,
-  emph            = [3]{var, const, abstract, 
-                        protected, private, public,
-                        static, final, extends, implements,
-                        global, if, else, foreach ,for,
-                        endforeach, endif, endfor, elseif,
-                        as, return},
-  keywords    ={__halt_compiler,    abstract,   and,    array,
+  emph    = [1] {__halt_compiler,    abstract,   and,    array,
                     as, break,  callable,   case,   catch,  class,
                     clone,  const,  continue,   declare,    default,
-                    die,    do, echo,   else,   elseif,
+                    die, do, echo,   else,   elseif,
                     empty,  enddeclare, endfor, endforeach, endif,
                     endswitch,  endwhile,   eval,   exit,   extends,
                     final,  finally,    for,    foreach,    function,
@@ -48,8 +39,48 @@
                     new,    or, print, private, protected,  public,
                     require,    require_once, return,   static,
                     switch, throw,  trait, try, unset, use, var,
-                    while,  xor, yield},
+                    while,  xor, yield, parent, Schema},
+  emphstyle = [1]\color{purple},
 }
+
+\makeatletter
+
+\lstdefinestyle{mystyle}
+{
+    language = PHP,
+    basicstyle = {\ttfamily \color{black}},
+    identifierstyle = \@identifierstyle,
+    stringstyle = {\color{dkgreen}},
+    keywordstyle = {\color{purple}},
+    keywordstyle = [2]{\color{cred}},
+    keywordstyle = [3]{\color{purple}},
+    otherkeywords = {::, <?php, ->},
+    morekeywords = [2]{<?php, ?>},
+    morekeywords = [3]{::, ->},
+    %morecomment=[s][\color{dkyellow}]{new }{\;}
+}[keywords,strings,comments]
+
+\def\@headtoken#1#2\end{\noexpand#1}
+
+\def\@identifierstyle{%
+    \edef\@tempa{\expandafter\@headtoken\the\lst@token\end}%
+    \edef\@tempb{\expandafter\noexpand\csname lst@um$\endcsname}%
+    \ifx\@tempa\@tempb
+        % apply special style for identifies staring with '_'
+        \color{cred}%
+    \else
+        % normal identifier style
+        \color{black}%
+    \fi
+}
+
+\makeatother
+
+\usepackage[newfloat]{minted}
+\usepackage{caption}
+
+\newenvironment{code}{\captionsetup{type=listing}}{}
+
 
 %SetFonts
 \usepackage[explicit]{titlesec}
@@ -68,528 +99,179 @@
 \newpage
 
 \section{Models}
-\begin{lstlisting}[showstringspaces=false, title=Post.java, language=PHP, frame=single]
-<?php
 
-namespace App;
+\begin{code}
+\captionof{listing}{User.php}
+\label{code:User}
+\inputminted[style=xcode, frame=single]{php}{../app/User.php}
+\end{code}
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
+\begin{code}
+\captionof{listing}{Post.php}
+\label{code:Post}
+\inputminted[style=xcode, frame=single]{php}{../app/Post.php}
+\end{code}
 
-class Post extends Model
-{
-    use Notifiable;
+\begin{code}
+\captionof{listing}{Comment.php}
+\label{code:Comment}
+\inputminted[style=xcode, frame=single]{php}{../app/Comment.php}
+\end{code}
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'title', 'content',
-    ];
+\begin{code}
+\captionof{listing}{Profile.php}
+\label{code:Profile}
+\inputminted[style=xcode, frame=single]{php}{../app/Profile.php}
+\end{code}
 
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
+\begin{code}
+\captionof{listing}{Tag.php}
+\label{code:Tag}
+\inputminted[style=xcode, frame=single]{php}{../app/Tag.php}
+\end{code}
 
-    public function tags()
-    {
-        return $this->belongsToMany('App\Tag');
-    }
+\begin{code}
+\captionof{listing}{View.php}
+\label{code:View}
+\inputminted[style=xcode, frame=single]{php}{../app/View.php}
+\end{code}
 
-    public function comments()
-    {
-        return $this->hasMany('App\Comment');
-    }
-
-    public function views()
-    {
-        return $this->hasMany('App\View');
-    }
-
-    public function votes()
-    {
-        return $this->hasMany('App\Vote');
-    }
-}
-\end{lstlisting}
-
-\begin{lstlisting}[showstringspaces=false, title=Comment.java, language=PHP, frame=single]
-<?php
-
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Comment extends Model
-{
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
-
-    public function post()
-    {
-        return $this->belongsTo('App\Post');
-    }
-}
-\end{lstlisting}
-
-\begin{lstlisting}[showstringspaces=false, title=User.java, language=PHP, frame=single]
-<?php
-
-namespace App;
-
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-
-class User extends Authenticatable
-{
-    use Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    public function profile()
-    {
-        return $this->hasOne('App\Profile');
-    }
-
-    public function posts()
-    {
-        return $this->hasMany('App\Post');
-    }
-
-    public function comments()
-    {
-        return $this->hasMany('App\Comment');
-    }
-
-    public function votes()
-    {
-        return $this->hasMany('App\Vote');
-    }
-}
-\end{lstlisting}
-
-\begin{lstlisting}[showstringspaces=false, title=Profile.java, language=PHP, frame=single]
-<?php
-
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Profile extends Model
-{
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
-}
-\end{lstlisting}
-
-\begin{lstlisting}[showstringspaces=false, title=Tag.java, language=PHP, frame=single]
-<?php
-
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Tag extends Model
-{
-    public function posts()
-    {
-        return $this->belongsToMany('App\Post');
-    }
-}
-\end{lstlisting}
-
-\begin{lstlisting}[showstringspaces=false, title=View.java, language=PHP, frame=single]
-<?php
-
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
-
-class View extends Model
-{
-    public function post()
-    {
-        return $this->belongsTo('App\Post');
-    }
-}
-\end{lstlisting}
-
-\begin{lstlisting}[showstringspaces=false, title=Vote.java, language=PHP, frame=single]
-<?php
-
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Vote extends Model
-{
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
-
-    public function post()
-    {
-        return $this->belongsTo('App\Post');
-    }
-}
-\end{lstlisting}
+\begin{code}
+\captionof{listing}{Vote.php}
+\label{code:Vote}
+\inputminted[style=xcode, frame=single]{php}{../app/Vote.php}
+\end{code}
 
 \section{Migrations}
 
-\begin{lstlisting}[showstringspaces=false, title=CreateUsersTable.java, language=PHP, frame=single]
-<?php
+\begin{code}
+\captionof{listing}{create\_users\_table.php}
+\label{code:create_users_table}
+\inputminted[style=xcode, frame=single]{php}{../database/migrations/2014_10_12_000000_create_users_table.php}
+\end{code}
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+\begin{code}
+\captionof{listing}{create\_posts\_table.php}
+\label{code:create_posts_table}
+\inputminted[style=xcode, frame=single]{php}{../database/migrations/2019_10_10_092051_create_posts_table.php}
+\end{code}
 
-class CreateUsersTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
-    }
+\begin{code}
+\captionof{listing}{create\_comments\_table.php}
+\label{code:create_comments_table}
+\inputminted[style=xcode, frame=single]{php}{../database/migrations/2019_10_19_140013_create_comments_table.php}
+\end{code}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('users');
-    }
-}
-\end{lstlisting}
+\begin{code}
+\captionof{listing}{create\_profiles\_table.php}
+\label{code:create_profiles_table}
+\inputminted[style=xcode, frame=single]{php}{../database/migrations/2019_10_24_103603_create_profiles_table.php}
+\end{code}
 
-\begin{lstlisting}[showstringspaces=false, title=CreatePostsTable.java, language=PHP, frame=single]
-<?php
+\begin{code}
+\captionof{listing}{create\_views\_table.php}
+\label{code:create_views_table}
+\inputminted[style=xcode, frame=single]{php}{../database/migrations/2019_10_19_140030_create_views_table.php}
+\end{code}
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+\begin{code}
+\captionof{listing}{create\_votes\_table.php}
+\label{code:create_votes_table}
+\inputminted[style=xcode, frame=single]{php}{../database/migrations/2019_10_19_145927_create_votes_table.php}
+\end{code}
 
-class CreatePostsTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->string('title');
-            $table->mediumText('featured_pic_path')->nullable();
-            $table->longText('content');
-            $table->timestamps();
+\begin{code}
+\captionof{listing}{create\_tags\_table.php}
+\label{code:create_tags_table}
+\inputminted[style=xcode, frame=single]{php}{../database/migrations/2019_10_21_224826_create_tags_table.php}
+\end{code}
 
-            $table->foreign('user_id')->references('id')->
-              on('users')->onDelete('cascade')->onupdate('cascade');
-        });
-    }
+\begin{code}
+\captionof{listing}{create\_post\_tag\_table.php}
+\label{code:create_post_tag_table}
+\inputminted[style=xcode, frame=single]{php}{../database/migrations/2019_10_21_225350_create_post_tag_table.php}
+\end{code}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('posts');
-    }
-}
-\end{lstlisting}
+\section{Seeds}
 
-\begin{lstlisting}[showstringspaces=false, title=CreateCommentsTable.java, language=PHP, frame=single]
-<?php
+\begin{code}
+\captionof{listing}{UsersTableSeeder.php}
+\label{code:UsersTableSeeder}
+\inputminted[style=xcode, frame=single]{php}{../database/seeds/UsersTableSeeder.php}
+\end{code}
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+\begin{code}
+\captionof{listing}{PostsTableSeeder.php}
+\label{code:PostsTableSeeder}
+\inputminted[style=xcode, frame=single]{php}{../database/seeds/PostsTableSeeder.php}
+\end{code}
 
-class CreateCommentsTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('comments', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('post_id');
-            $table->mediumText('text');
-            $table->timestamps();
+\begin{code}
+\captionof{listing}{TagsTableSeeder.php}
+\label{code:TagsTableSeeder}
+\inputminted[style=xcode, frame=single]{php}{../database/seeds/TagsTableSeeder.php}
+\end{code}
 
-            $table->foreign('user_id')->references('id')->
-              on('users')->onDelete('cascade')->onupdate('cascade');
+\begin{code}
+\captionof{listing}{CommentsTableSeeder.php}
+\label{code:CommentsTableSeeder}
+\inputminted[style=xcode, frame=single]{php}{../database/seeds/CommentsTableSeeder.php}
+\end{code}
 
-            $table->foreign('post_id')->references('id')->
-              on('posts')->onDelete('cascade')->onupdate('cascade');
-        });
-    }
+\begin{code}
+\captionof{listing}{VotesTableSeeder.php}
+\label{code:VotesTableSeeder}
+\inputminted[style=xcode, frame=single]{php}{../database/seeds/VotesTableSeeder.php}
+\end{code}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('comments');
-    }
-}
-\end{lstlisting}
+\begin{code}
+\captionof{listing}{ViewsTableSeeder.php}
+\label{code:ViewsTableSeeder}
+\inputminted[style=xcode, frame=single]{php}{../database/seeds/ViewsTableSeeder.php}
+\end{code}
 
-\begin{lstlisting}[showstringspaces=false, title=CreateViewsTable.java, language=PHP, frame=single]
-<?php
+\begin{code}
+\captionof{listing}{DatabaseSeeder.php}
+\label{code:DatabaseSeeder}
+\inputminted[style=xcode, frame=single]{php}{../database/seeds/DatabaseSeeder.php}
+\end{code}
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+\section{Factories}
 
-class CreateViewsTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('views', function (Blueprint $table) {
-            $table->primary(['identifier', 'post_id'], 'identifier_post');
-            $table->string('identifier')->unique();
-            $table->unsignedBigInteger('post_id');
-            $table->timestamps();
+\begin{code}
+\captionof{listing}{UserFactory.php}
+\label{code:UserFactory}
+\inputminted[style=xcode, frame=single]{php}{../database/factories/UserFactory.php}
+\end{code}
 
-            $table->foreign('post_id')->references('id')->
-              on('posts')->onDelete('cascade')->onupdate('cascade');
-        });
-    }
+\begin{code}
+\captionof{listing}{PostFactory.php}
+\label{code:PostFactory}
+\inputminted[style=xcode, frame=single]{php}{../database/factories/PostFactory.php}
+\end{code}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('views');
-    }
-}
-\end{lstlisting}
+\begin{code}
+\captionof{listing}{CommentFactory.php}
+\label{code:CommentFactory}
+\inputminted[style=xcode, frame=single]{php}{../database/factories/CommentFactory.php}
+\end{code}
 
-\begin{lstlisting}[showstringspaces=false, title=CreateVotesTable.java, language=PHP, frame=single]
-<?php
+\begin{code}
+\captionof{listing}{TagFactory.php}
+\label{code:TagFactory}
+\inputminted[style=xcode, frame=single]{php}{../database/factories/TagFactory.php}
+\end{code}
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+\begin{code}
+\captionof{listing}{ViewFactory.php}
+\label{code:ViewFactory}
+\inputminted[style=xcode, frame=single]{php}{../database/factories/ViewFactory.php}
+\end{code}
 
-class CreateVotesTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('votes', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('post_id');
-            $table->tinyInteger('type');
-            $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->
-              on('users')->onDelete('cascade')->onupdate('cascade');
-
-            $table->foreign('post_id')->references('id')->
-              on('posts')->onDelete('cascade')->onupdate('cascade');
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('votes');
-    }
-}
-\end{lstlisting}
-
-\begin{lstlisting}[showstringspaces=false, title=CreateTagsTable.java, language=PHP, frame=single]
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-class CreateTagsTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('tags', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name')->unique();
-            $table->timestamps();
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('tags');
-    }
-}
-\end{lstlisting}
-
-\begin{lstlisting}[showstringspaces=false, title=CreateProfilesTable.java, language=PHP, frame=single]
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-class CreateProfilesTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('profiles', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->mediumText('bio');
-            $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->
-              on('users')->onDelete('cascade')->onupdate('cascade');
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('profiles');
-    }
-}
-\end{lstlisting}
-
-\begin{lstlisting}[showstringspaces=false, title=CreatePostTagTable.java, language=PHP, frame=single]
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-class CreatePostTagTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('post_tag', function (Blueprint $table) {
-            $table->primary(['post_id', 'tag_id'], 'post_tag');
-            $table->unsignedBigInteger('post_id');
-            $table->unsignedBigInteger('tag_id');
-
-            $table->foreign('post_id')->references('id')->
-              on('posts')->onDelete('cascade')->onupdate('cascade');
-
-            $table->foreign('tag_id')->references('id')->
-              on('tags')->onDelete('cascade')->onupdate('cascade');
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('post_tag');
-    }
-}
-\end{lstlisting}
-
-\section{}
+\begin{code}
+\captionof{listing}{VoteFactory.php}
+\label{code:VoteFactory}
+\inputminted[style=xcode, frame=single]{php}{../database/factories/VoteFactory.php}
+\end{code}
 
 \end{document}  

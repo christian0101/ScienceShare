@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(View::class, function (Faker $faker) {
     return [
-        'identifier' => rand(0, 255).'.'.rand(0, 255).'.'.rand(0, 255).'.'.rand(0, 255),
+        'identifier' => $faker->ipv4(),
         'post_id' => App\Post::pluck('id')->random()
     ];
 });

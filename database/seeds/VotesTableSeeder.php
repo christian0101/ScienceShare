@@ -12,8 +12,9 @@ class VotesTableSeeder extends Seeder
      */
     public function run()
     {
-        //$total = SUM(vote);
+        // make vote objects
         factory(App\Vote::class, 60)->make()->each(function ($vote) {
+            // add only unique votes
             Vote::firstOrCreate(
             [
               'user_id' => $vote->user_id,

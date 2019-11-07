@@ -12,12 +12,15 @@ class TagsTableSeeder extends Seeder
      */
     public function run()
     {
+        // make tag objects
         factory(App\Tag::class, 30)->make()->each(function ($tag) {
+            // create tag only if it does not already exist
             $new_tag = Tag::firstOrNew(
               ['name' => $tag->name],
               ['name' => $tag->name]
             );
 
+            // save tag and attach to a random post
             if (!$new_tag->exists) {
               $new_tag->save();
               $new_tag->posts()->attach(App\Post::pluck('id')->random());
