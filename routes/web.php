@@ -19,10 +19,16 @@ Route::get('/home', function () {
     return "This is the /home page";
 });
 
-Route::get('blog', 'PostController@index');
-Route::get('blog/post/{id}', 'PostController@show')->name('posts.show');
-Route::redirect('/posts', 'blog');
+// Posts
+Route::get('/blog', 'PostController@index');
+Route::get('/blog/post/{id}', 'PostController@show')->name('posts.show');
 
-Route::get('/home/{name?}', function ($name = null) {
-    return "This is $name's /home page";
-});
+// Tags
+Route::redirect('/blog/tag/{id}', '/blog/tag/{id}/posts');
+Route::get('/blog/tag/{id}/posts', 'TagController@posts')->name('tags.posts');
+
+Route::redirect('/posts', '/blog');
+
+// Route::get('/home/{name?}', function ($name = null) {
+//     return "This is $name's /home page";
+// });
