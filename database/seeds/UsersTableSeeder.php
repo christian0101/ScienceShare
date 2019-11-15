@@ -15,8 +15,8 @@ class UsersTableSeeder extends Seeder
         // make sure at least one user exists
         $user = new User;
         $user->name = 'admin';
-        $user->email = 'cristian9613@live.com';
-        $user->password = '@a!dm$in@';
+        $user->email = 'foo@bar.com';
+        $user->password = Hash::make('@a!dm$in@');
         $user->email_verified_at = now();
         $user->save();
 

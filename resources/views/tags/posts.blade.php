@@ -5,7 +5,7 @@
 @section('content')
 
   <div class="row">
-    <div class="col-xl-12 py-md-3 pl-md-5 bd-content">
+    <div class="col-xl-12">
       <h2>
         Posts for
         <span class="badge badge-primary">

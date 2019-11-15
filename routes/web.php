@@ -13,21 +13,17 @@
 
 Auth::routes();
 
-Route::redirect('/', 'blog');
-
-Route::get('/home', function () {
-    return "This is the /home page";
-});
+Route::get('/home', 'HomeController@index')->name('home');
 
 // Posts
-Route::get('/blog', 'PostController@index');
-Route::get('/blog/post/{id}', 'PostController@show')->name('posts.show');
+Route::get('/', 'PostController@index');
+Route::get('/post/{id}', 'PostController@show')->name('posts.show');
 
 // Tags
-Route::redirect('/blog/tag/{id}', '/blog/tag/{id}/posts');
-Route::get('/blog/tag/{id}/posts', 'TagController@posts')->name('tags.posts');
+Route::redirect('/tag/{id}', '/blog/tag/{id}/posts');
+Route::get('/tag/{id}/posts', 'TagController@posts')->name('tags.posts');
 
-Route::redirect('/posts', '/blog');
+Route::redirect('/posts', '/');
 
 // Route::get('/home/{name?}', function ($name = null) {
 //     return "This is $name's /home page";
