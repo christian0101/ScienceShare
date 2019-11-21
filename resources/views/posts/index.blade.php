@@ -5,23 +5,31 @@
 @section('content')
 
   <div class="row">
-    <div class="col-sm-12">
       @foreach ($posts as $post)
-        <div>
+        <div align="center" class="col-1">
+          <button class="btn btn-success">up</button>
+          <h6>{{ $post->votes->sum('type') }}</h6>
+          <button class="btn btn-danger">down</button>
+        </div>
+        <div class="col-11">
           <h3>
             <a href="{{ route('posts.show', ['id' => $post->id]) }}">
               {{ $post->title }}
             </a>
           </h3>
 
-          <span>Published by {{ $post->user->name }}</span>
-          <span>{{ $post->created_at }}</span>
+          <p>Published by {{ $post->user->name }} {{ $post->created_at }}
+            <span class="badge badge-secondary">
+              {{ $post->views->count() }} View(s)
+            </span>
+          </p>
           <p> {{ $post->content }} </p>
         </div>
       @endforeach
-    <div>
-  </div>
 
-  <span>{{ $posts->links() }}</span>
+    <div class="col-12">
+      <p>{{ $posts->links() }}</p>
+    </div>
+  </div>
 
 @endsection

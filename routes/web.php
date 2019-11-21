@@ -20,8 +20,8 @@ Route::get('/', 'PostController@index');
 Route::get('/post/{id}', 'PostController@show')->name('posts.show');
 
 // Tags
-Route::redirect('/tag/{id}', '/blog/tag/{id}/posts');
-Route::get('/tag/{id}/posts', 'TagController@posts')->name('tags.posts');
+Route::redirect('/tag/{id}', '/tag/{id}/posts');
+Route::get('/tag/{id}/posts', 'TagController@posts')->name('posts.index');
 
 Route::redirect('/posts', '/');
 

@@ -13,7 +13,7 @@ class VotesTableSeeder extends Seeder
     public function run()
     {
         // make vote objects
-        factory(App\Vote::class, 60)->make()->each(function ($vote) {
+        factory(App\Vote::class, 200)->make()->each(function ($vote) {
             // add only unique votes
             Vote::firstOrCreate(
             [

@@ -46,7 +46,7 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        return view('tags.show', ['tag' => Tag::findOrFail($id)]);
+        //
     }
 
     /**
@@ -59,7 +59,7 @@ class TagController extends Controller
     {
         $tag = Tag::findOrFail($id);
         $posts = $tag->posts()->paginate(5);
-        return view('tags.posts', ['posts' => $posts, 'tag' => $tag]);
+        return view('posts.index', ['posts' => $posts, 'tag' => $tag]);
     }
 
     /**

@@ -13,7 +13,7 @@ class ViewsTableSeeder extends Seeder
     public function run()
     {
         // make view objects
-        factory(App\View::class, 60)->make()->each(function ($view) {
+        factory(App\View::class, 200)->make()->each(function ($view) {
             // add only unique views
             View::firstOrCreate(
             [
