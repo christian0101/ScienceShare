@@ -18,7 +18,9 @@
             </a>
           </h3>
 
-          <p>Published by {{ $post->user->name }} {{ $post->created_at }}
+          <p>Published by
+            <a href="{{ route('profiles.show', ['id' => $post->user->id]) }}">{{ $post->user->name }}</a>
+            {{ $post->created_at }}
             <span class="badge badge-secondary">
               {{ $post->views->count() }} View(s)
             </span>
