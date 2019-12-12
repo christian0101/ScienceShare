@@ -16,6 +16,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Posts
+Route::redirect('/posts', '/');
 Route::get('/', 'PostController@index');
 Route::get('/post/{id}', 'PostController@show')->name('posts.show');
 
@@ -23,7 +24,8 @@ Route::get('/post/{id}', 'PostController@show')->name('posts.show');
 Route::redirect('/tag/{id}', '/tag/{id}/posts');
 Route::get('/tag/{id}/posts', 'TagController@posts')->name('posts.index');
 
-Route::redirect('/posts', '/');
+// User Profile
+Route::get('/user/{id}', 'ProfileController@show')->name('profiles.show');
 
 // Route::get('/home/{name?}', function ($name = null) {
 //     return "This is $name's /home page";
