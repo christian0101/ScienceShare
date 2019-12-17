@@ -6,6 +6,7 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import 'tagsInput';
 
 body {
   background-color: color('white');
@@ -13,4 +14,8 @@ body {
 
 :target {
    @extend .mark;
+}
+
+.removeTag {
+  cursor: pointer;
 }

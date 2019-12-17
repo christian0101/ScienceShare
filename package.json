@@ -24,6 +24,8 @@
     },
     "dependencies": {
         "@types/bootstrap": "^4.3.1",
-        "popper.js": "^1.16.0"
+        "@voerro/vue-tagsinput": "^2.1.0",
+        "popper.js": "^1.16.0",
+        "vue-multiselect": "^2.1.6"
     }
 }

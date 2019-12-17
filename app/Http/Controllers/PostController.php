@@ -23,6 +23,16 @@ class PostController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function apiIndex()
+    {
+        return Post::latest()->get();
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -30,7 +40,7 @@ class PostController extends Controller
     public function create()
     {
         $tagC = new TagController();
-        $tags = $tagC->index();
+        $tags = $tagC->apiIndex()->pluck('name');
         return view('posts.create', ['tags' => $tags]);
     }
 
@@ -47,7 +57,7 @@ class PostController extends Controller
           'title' => 'required|between:2,255',
           'featured_pic_path' => 'nullable|string',
           'tags' => 'nullable|string',
-          'content' => 'required|between:2,255'
+          'content' => 'required|min:2'
         ]);
 
         // save validated data to database
@@ -58,16 +68,13 @@ class PostController extends Controller
         $post->content = $validatedData['content'];
         $post->save();
 
-        // format tags
-        $validatedData['tags'] = trim(preg_replace('/\s+/', '', $validatedData['tags']));
-        $tags = explode(",", $validatedData['tags']);
-
         // save tags
+        $tags = json_decode($validatedData['tags']);
         foreach ($tags as $tag)
         {
             $tag_obj = Tag::firstOrNew(
-              ['name' => $tag],
-              ['name' => $tag]
+              ['name' => $tag->value],
+              ['name' => $tag->value]
             );
 
             if (!$tag_obj->exists) {

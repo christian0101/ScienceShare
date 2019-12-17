@@ -17,13 +17,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // Posts
 Route::redirect('posts', '/');
+Route::get('api/posts', 'PostController@apiIndex')->name('posts.api');
 Route::get('/', 'PostController@index')->name('posts');
 Route::get('post/create', 'PostController@create')->name('posts.create')->middleware('auth');
 Route::post('posts', 'PostController@store')->name('posts.store')->middleware('auth');
 Route::get('post/{id}', 'PostController@show')->name('posts.show');
 
 // Tags
-Route::get('api/tags', 'TagController@index')->name('tags.api');
+Route::get('api/tags', 'TagController@apiIndex')->name('tags.api');
 Route::get('tag/{id}/posts', 'TagController@posts')->name('tag.posts');
 Route::redirect('tag/{id}', 'tag/{id}/posts');
 //Route::redirect('tags', 'api/tags');

@@ -14,8 +14,19 @@ class TagController extends Controller
      */
     public function index()
     {
-        return Tag::latest()->get()->pluck('name');
+        //
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function apiIndex()
+    {
+        return Tag::latest()->get();
+    }
+
 
     /**
      * Show the form for creating a new resource.
