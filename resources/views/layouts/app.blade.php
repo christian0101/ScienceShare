@@ -74,7 +74,27 @@
           </div>
       </nav>
       <div class="container-fluid py-4">
-        @yield('content')
+          @if (session('status') || session('message'))
+              <div class="alert {{ session('alert-class') ?? 'alert-success' }} alert-dismissible fade show" role="alert">
+                  {{ session('status') ?? session('message') }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+          @endif
+
+          @if ($errors->any())
+            @foreach ($errors->all() as $error)
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  {{ $error }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+            @endforeach
+          @endif
+
+          @yield('content')
       </div>
     </div>
   </body>

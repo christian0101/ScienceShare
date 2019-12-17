@@ -20,12 +20,22 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    //protected $redirectTo = '/';
     /**
      * Where to redirect users after login.
-     *
-     * @var string
      */
-    protected $redirectTo = '/home';
+    protected function authenticated()
+    {
+    	return redirect()->intended()->with('status', 'You are logged in!');
+    }
+
+    /**
+     * Where to redirect users after logout.
+     */
+    protected function loggedOut()
+    {
+        return redirect()->intended()->with('status', 'You are logged out!');
+    }
 
     /**
      * Create a new controller instance.

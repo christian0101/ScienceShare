@@ -25,7 +25,7 @@ class TagsTableSeeder extends Seeder
               $new_tag->save();
               $new_tag->posts()
                 ->attach(App\Post::all()
-                ->random(rand(3, 10))->pluck('id')->toArray());
+                ->random(rand(2, 6))->pluck('id')->toArray());
             }
         });
     }

@@ -14,7 +14,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        return Tag::latest()->get()->pluck('name');
     }
 
     /**
@@ -60,6 +60,17 @@ class TagController extends Controller
         $tag = Tag::findOrFail($id);
         $posts = $tag->posts()->paginate(5);
         return view('posts.index', ['posts' => $posts, 'tag' => $tag]);
+    }
+
+    /**
+     * Return specified resource.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getTag(Request $request)
+    {
+        $tagName = $request->get('query');
     }
 
     /**

@@ -44,7 +44,6 @@ class User extends Authenticatable
         static::created(function($model) {
             $profile = new Profile;
             $profile->user_id = $model->id;
-            $profile->bio = '';
             $profile->save();
         });
     }
