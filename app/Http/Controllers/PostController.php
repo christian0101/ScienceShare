@@ -65,16 +65,18 @@ class PostController extends Controller
         // save tags
         foreach ($tags as $tag)
         {
-            $new_tag = Tag::firstOrNew(
+            $tag_obj = Tag::firstOrNew(
               ['name' => $tag],
               ['name' => $tag]
             );
 
-            if (!$new_tag->exists) {
-              $new_tag->save();
+            if (!$tag_obj->exists) {
+              $tag_obj->save();
             }
 
-            $new_tag->posts()->attach($post->id);
+            if (!$tag_obj->posts->contains($post)) {
+              $tag_obj->posts()->attach($post->id);
+            }
         }
 
         session()->flash('message', 'Post succesfully created');
