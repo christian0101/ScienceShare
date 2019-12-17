@@ -39,9 +39,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $tagC = new TagController();
-        $tags = $tagC->apiIndex()->pluck('name');
-        return view('posts.create', ['tags' => $tags]);
+        return view('posts.create');
     }
 
     /**
