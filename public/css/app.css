@@ -11246,3 +11246,7 @@ body {
   cursor: pointer;
 }
 
+img {
+  max-width: 100%;
+}
+

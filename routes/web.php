@@ -17,20 +17,21 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // Posts
 Route::redirect('posts', '/');
-Route::get('api/posts', 'PostController@apiIndex')->name('posts.api');
 Route::get('/', 'PostController@index')->name('posts');
 Route::get('post/create', 'PostController@create')->name('posts.create')->middleware('auth');
 Route::post('posts', 'PostController@store')->name('posts.store')->middleware('auth');
-Route::get('post/{id}', 'PostController@show')->name('posts.show');
+Route::get('post/{post}', 'PostController@show')->name('posts.show');
 
 // Tags
-Route::get('api/tags', 'TagController@apiIndex')->name('tags.api');
-Route::get('tag/{id}/posts', 'TagController@posts')->name('tag.posts');
-Route::redirect('tag/{id}', 'tag/{id}/posts');
-//Route::redirect('tags', 'api/tags');
+Route::get('tag/{tag}/posts', 'TagController@posts')->name('tag.posts');
+Route::redirect('tag/{tag}', 'tag/{tag}/posts');
 
 // Users Profiles
-Route::get('user/{id}', 'ProfileController@show')->name('profiles.show');
+Route::get('user/{user}', 'ProfileController@show')->name('profiles.show');
+
+// images
+// Route::get('image/upload', 'ImageController@create')->name('images.create')->middleware('auth');
+// Route::post('images', 'ImageController@store')->name('images.store')->middleware('auth');
 
 // Route::get('/home/{name?}', function ($name = null) {
 //     return "This is $name's /home page";

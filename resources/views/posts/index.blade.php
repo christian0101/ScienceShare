@@ -18,12 +18,12 @@
         </div>
         <div class="col-11">
             <h3>
-                <a href="{{ route('posts.show', ['id' => $post->id]) }}">
+                <a href="{{ route('posts.show', ['post' => $post]) }}">
                     {{ $post->title }}
                 </a>
             </h3>
             <p class="text-secondary">
-                <a href="{{ route('profiles.show', ['id' => $post->user->id]) }}">{{ $post->user->name }}</a>
+                <a href="{{ route('profiles.show', ['user' => $post->user]) }}">{{ $post->user->name }}</a>
                 on {{ $post->created_at->format('d M Y') }} / {{ $post->views->count() }} View(s) /
             </p>
             <p> {{ Str::limit($post->content, 900) }} </p>

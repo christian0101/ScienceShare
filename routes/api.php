@@ -16,3 +16,14 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Posts
+Route::get('posts', 'PostController@apiIndex')->name('posts.api');
+
+// Tags
+Route::get('tags', 'TagController@apiIndex')->name('tags.api');
+
+// Comments
+Route::get('/comments', 'CommentController@apiIndex')->name('comments.api');
+Route::post('/comments', 'CommentController@store')->name('new.comments.api');
+Route::get('/post/{post}/comments', 'CommentController@apiPostComments')->name('post.comments.api');

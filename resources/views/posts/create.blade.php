@@ -6,12 +6,13 @@
 
   <div id="createPost">
 
-    <form action="{{ route('posts.store') }}" method="post">
+    <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
       @csrf
 
       <h3><label>Title*</label>
       <input class="form-control" type="text" name="title" value="{{ old('title') }}" /></h3>
-      <p>Featured Picture: <input class="form-control" type="text" name="featured_pic_path" value="{{ old('featured_pic_path') }}" /></p>
+      <p><img id="preview" src="" /></p>
+      <p>Featured Picture: <input onchange="previewFile(this)" type="file" class="form-control" name="featured_pic" value="" accept="image/x-png,image/gif,image/jpeg,image/svg" /></p>
       <p>Tags (space separated):
         <tags-input element-id="tags"
           :existing-tags="[
@@ -27,7 +28,7 @@
           :value={{ old('tags') ?? "[]" }}>
         </tags-input>
       </p>
-      <p>Content*: <textarea class="form-control" type="text" name="content" value="{{ old('content') }}"></textarea></p>
+      <p>Content*: <textarea class="form-control" type="text" name="content">{{ old('content') }}</textarea></p>
       <input class="btn btn-success" type="submit" value="Submit" />
       <a class="btn btn-danger" href="{{ route('posts') }}">Cancel</a>
 

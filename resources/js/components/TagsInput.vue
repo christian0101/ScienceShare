@@ -40,7 +40,7 @@
         </div>
 
         <!-- Typeahead/Autocomplete -->
-        <div v-show="searchResults.length">
+        <div class="h5 mt-1" v-show="searchResults.length">
             <p v-if="typeaheadStyle === 'badges'" :class="`typeahead-${typeaheadStyle}`">
                 <span v-if="!typeaheadHideDiscard" class="badge badge-danger"
                     @click.prevent="clearSearchResults"
@@ -51,8 +51,9 @@
                     v-html="tag.value"
                     @mouseover="searchSelection = index"
                     @mousedown.prevent="tagFromSearchOnClick(tag)"
+                    class="mt-1"
                     v-bind:class="{
-                        'badge badge-dark': index != searchSelection,
+                        'badge badge-secondary': index != searchSelection,
                         'badge badge-primary': index == searchSelection
                     }"></span>
             </p>
