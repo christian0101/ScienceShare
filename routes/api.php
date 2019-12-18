@@ -24,6 +24,5 @@ Route::get('posts', 'PostController@apiIndex')->name('posts.api');
 Route::get('tags', 'TagController@apiIndex')->name('tags.api');
 
 // Comments
-Route::get('/comments', 'CommentController@apiIndex')->name('comments.api');
-Route::post('/comments', 'CommentController@store')->name('new.comments.api');
-Route::get('/post/{post}/comments', 'CommentController@apiPostComments')->name('post.comments.api');
+Route::get('comments', 'CommentController@apiIndex')->name('comments.api');
+Route::get('post/{post}/comments', 'CommentController@apiPostComments')->name('post.comments.api');

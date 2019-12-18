@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Post;
+use Auth;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -56,6 +57,17 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function apiStore(Request $request)
+    {
         // validate data
         $validatedData = $request->validate([
           'text' => 'required|min:5'
@@ -63,11 +75,11 @@ class CommentController extends Controller
 
         $comment = new Comment();
         $comment->user_id = Auth::user()->id;
-        $comment->post_id = 1;
+        $comment->post_id = $request['post_id'];
         $comment->text = $validatedData['text'];
         $comment->save();
 
-        return response()->json('ok');
+        return Comment::with('user')->find($comment->id);
     }
 
     /**

@@ -1,4 +1,9 @@
 /* The input */
+
+.tags-input-root {
+    position: relative;
+}
+
 .tags-input {
     display: flex;
     flex-wrap: wrap;
@@ -50,7 +55,7 @@
     top: 50%;
     left: 0;
     background: #5dc282;
-    
+
     height: 2px;
     margin-top: -1px;
 }

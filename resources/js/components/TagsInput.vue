@@ -701,9 +701,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.tags-input-root {
-    position: relative;
-}
-</style>

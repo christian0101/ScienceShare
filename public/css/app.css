@@ -11103,6 +11103,10 @@ a.text-dark:focus {
 
 /* The input */
 
+.tags-input-root {
+  position: relative;
+}
+
 .tags-input {
   display: -webkit-box;
   display: flex;

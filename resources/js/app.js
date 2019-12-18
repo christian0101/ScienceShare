@@ -30,5 +30,5 @@ Vue.component('comments', require('./components/Comments.vue').default);
  */
 
 const app = new Vue({
-    el: '#app',
+  el: '#app'
 });
