@@ -8,6 +8,7 @@ require('./bootstrap');
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 window.Vue = require('vue');
+window.ClassicEditor = ClassicEditor;
 
 /**
  * The following block of code may be used to automatically register your
@@ -29,15 +30,52 @@ Vue.component('comments', require('./components/Comments.vue').default);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+if ( document.querySelector( '#comments' )) {
+  const comments = new Vue({
+   el: '#comments',
+  });
+}
 
-const app = new Vue({
-  el: '#app'
-});
+if ( document.querySelector( '#createPost' )) {
+  const createPost = new Vue({
+   el: '#createPost',
 
-if (document.querySelector( '#post_text' )) {
-  ClassicEditor
-  .create( document.querySelector( '#post_text' ) )
-  .catch( error => {
-  console.error( error );
-  } );
+   mounted() {
+     let post_text = document.querySelector( '#post_text' );
+     if (post_text) {
+       ClassicEditor
+       .create(post_text, {
+         
+       })
+       .catch( error => {
+         showNotification(error, 5);
+         console.error( error );
+       });
+
+       post_text.id = "editing_post_text";
+     }
+   },
+  });
+}
+
+if ( document.querySelector( '#post' )) {
+  const post = new Vue({
+    el: '#post',
+
+    methods: {
+      createEditor() {
+        let post_text = document.querySelector( '#post_text' );
+        if (post_text) {
+          ClassicEditor
+          .create( post_text )
+          .catch( error => {
+            showNotification(error, 5);
+            console.error( error );
+          } );
+
+          post_text.id = "editing_post_text";
+        }
+      }
+    }
+  });
 }

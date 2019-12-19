@@ -28,15 +28,11 @@
 
     <div class="btn-group">
       @can('update', $post)
-        <form method="put" action="{{ route('posts.destroy', ['post' => $post]) }}">
-          @csrf
-          @method('DELETE')
-          <button typy="submit" class="btn btn-primary">Edit Post</button>
-        </form>
+        <button @click="createEditor" class="btn btn-primary">Edit Post</button>
       @endcan
 
       @can('delete', $post)
-        <form class="ml-1" method="post" action="{{ route('posts.destroy', ['post' => $post]) }}">
+        <form class="btn-group" method="post" action="{{ route('posts.destroy', ['post' => $post]) }}">
           @csrf
           @method('DELETE')
           <button typy="submit" class="btn btn-danger">Delete Post</button>
@@ -45,11 +41,13 @@
     </div>
   </div>
 
-  <comments :post-id="{{ $post->id }}"
-    @if( Auth::check())
-      :current-user="{{ Auth::user() }}"
-    @endif
-  >
-  </comments>
+  <div id="comments">
+    <comments :post-id="{{ $post->id }}"
+      @if( Auth::check())
+        :current-user="{{ Auth::user() }}"
+      @endif
+    >
+    </comments>
+  </div>
 
 @endsection

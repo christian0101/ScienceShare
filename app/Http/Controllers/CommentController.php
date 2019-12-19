@@ -75,7 +75,7 @@ class CommentController extends Controller
     {
         // validate data
         $validatedData = $request->validate([
-          'text' => 'required|min:5'
+          'text' => 'required|min:10'
         ]);
 
         $comment = new Comment();
@@ -119,6 +119,26 @@ class CommentController extends Controller
     public function update(Request $request, Comment $comment)
     {
         //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Comment  $comment
+     * @return \Illuminate\Http\Response
+     */
+    public function apiUpdate(Request $request, Comment $comment)
+    {
+        // validate data
+        $validatedData = $request->validate([
+          'text' => 'required|min:10'
+        ]);
+
+        $comment->text = $validatedData['text'];
+        $comment->save();
+
+        return response()->json('Comment Updated');
     }
 
     /**

@@ -1,31 +1,30 @@
 <template>
-  <div class="py-4" id="comments">
+  <div class="py-4">
     <h3><b>Comments</b></h3>
-    <div v-if="currentUser" id="new_comment">
+    <div v-if="currentUser && !editing" id="new_comment">
       <label>New Comment:</label>
-        <div class="row">
-          <div class="col-md-11 col-sm-9">
-            <p>
-              <textarea id="comment_text" class="form-control" v-model="commentText"></textarea>
-            </p>
-          </div>
-          <div class="col-md-1 col-sm-3">
-            <button @click="addComment" class="btn btn-success w-100 p-3">Post</button>
-          </div>
-        </div>
+      <p>
+        <textarea id="comment_text" class="form-control"></textarea>
+        <button @click="addComment" class="btn btn-success mt-2">Post</button>
+      </p>
       </div>
       <p v-if="comments.length == 0">No comments found :(</p>
-      <div @delete="destroy" v-for="comment in comments" :id="comment.id">
+      <div @delete="destroy" v-for="comment in comments" :id="comment.id" class="mb-2">
         <a :href="'/user/'+comment.user.id">{{ comment.user.name }}</a> on {{ comment.created_at }}
         <div v-if="currentUser && currentUser.id == comment.user.id" class="btn-group">
           <a href="#" class="more-opts" id="moreOptionsLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 
           <div class="dropdown-menu" aria-labelledby="moreOptionsLink">
-            <a class="dropdown-item" href="#">Edit</a>
+            <a v-if="('comment_'+comment.id+'_text') != editing" @click="createEditor('comment_'+comment.id+'_text')" class="dropdown-item">Edit</a>
             <a @click="destroy(comment.id)" class="dropdown-item">Delete</a>
           </div>
         </div>
-        <p>{{ comment.text }}</p>
+        <p :id="'comment_'+comment.id+'_text'" v-html="comment.text">
+          <div v-if="editing == ('comment_'+comment.id+'_text')" class="btn-group mt-2">
+            <button @click="update(comment.id)" class="btn btn-success">Save</button>
+            <button @click="cancelEdit" class="btn btn-danger">Cancel</button>
+          </div>
+        </p>
       </div>
       <p v-if="next_page_url" align="center">
         <button class='btn btn-dark' @click="loadMore()">Load More ...</button>
@@ -50,30 +49,36 @@
       return {
         comments: [],
         next_page_url: null,
-        commentText: null,
+        editing: null,
+        editor: null,
       };
     },
 
     mounted() {
       this.getComments('/api/post/'+this.postId+'/comments');
+      this.createEditor('comment_text');
     },
 
     methods: {
       addComment() {
         axios.post('/comments/new',{
           post_id: this.postId,
-          text: this.commentText,
+          text: this.editor.getData(),
         })
         .then(response => {
           this.comments.unshift(response.data)
-          this.commentText = "";
+          this.editor.setData("");
+          showNotification('Comment Posted', 5);
         })
         .catch(error => {
-          let errors = error.response.data.errors.text
-
-          errors.forEach(e => {
-            showNotification(e);
-          })
+          if (error.response) {
+            let errors = error.response.data.errors.text;
+            errors.forEach(e => {
+              showNotification(e, 5);
+            })
+          } else {
+            showNotification(error, 5);
+          }
         })
       },
 
@@ -91,20 +96,73 @@
         })
         .catch(error => {
           this.comments = []
+          showNotification(error, 5);
         })
       },
 
-      update(id, text) {
-        // TODO
+      createEditor(id) {
+        let el = document.getElementById(id);
+        console.log(el);
+        if (el) {
+          ClassicEditor
+          .create(el, {
+            removePlugins: [ 'Table' ]
+          }).then(newEditor => {
+            if (this.editor) {
+                this.editor.destroy();
+            }
+
+            if (id != "comment_text") {
+              this.editing = id;
+            }
+
+            this.editor = newEditor;
+          })
+          .catch( error => {
+            showNotification(error, 5);
+          });
+        }
+      },
+
+      cancelEdit() {
+        this.editing = null;
+        this.$nextTick(() => {
+          this.createEditor('comment_text');
+        });
+      },
+
+      update(id) {
+        axios.put('/comments/'+id+'/update', {
+          text: this.editor.getData(),
+        })
+        .then(response => {
+          showNotification(response.data, 5);
+          this.cancelEdit();
+        })
+        .catch(error => {
+          if (error.response) {
+            let errors = error.response.data.errors.text;
+            errors.forEach(e => {
+              showNotification(e, 5);
+            })
+          } else {
+            showNotification(error, 5);
+          }
+        })
       },
 
       destroy(id) {
-        axios.delete('/comments/'+id).then(response => {
+        axios.delete('/comments/'+id)
+        .then(response => {
+          if (this.editor && this.editing == 'comment_'+id+'_text') {
+            this.cancelEdit();
+          }
           const index = this.comments.findIndex(comment => comment.id === id);
           this.comments.splice(index, 1);
-          console.log(response)
-        }).catch(error => {
-          console.log(error.response)
+          showNotification(response.data, 5);
+        })
+        .catch(error => {
+          showNotification(error, 5);
         })
       }
     },
