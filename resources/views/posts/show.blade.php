@@ -25,9 +25,31 @@
           {{ $post->views->count() }} View(s)
         </span>
     </p>
+
+    <div class="btn-group">
+      @can('update', $post)
+        <form method="put" action="{{ route('posts.destroy', ['post' => $post]) }}">
+          @csrf
+          @method('DELETE')
+          <button typy="submit" class="btn btn-primary">Edit Post</button>
+        </form>
+      @endcan
+
+      @can('delete', $post)
+        <form class="ml-1" method="post" action="{{ route('posts.destroy', ['post' => $post]) }}">
+          @csrf
+          @method('DELETE')
+          <button typy="submit" class="btn btn-danger">Delete Post</button>
+        </form>
+      @endcan
+    </div>
   </div>
 
-  <comments :post-id="{{ $post->id }}">
+  <comments :post-id="{{ $post->id }}"
+    @if( Auth::check())
+      :current-user="{{ Auth::user() }}"
+    @endif
+  >
   </comments>
 
 @endsection

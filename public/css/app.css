@@ -11254,3 +11254,10 @@ img {
   max-width: 100%;
 }
 
+.more-opts::after {
+  content: "\2807";
+  font-weight: bold;
+  font-size: 18px;
+  color: #000000;
+}
+

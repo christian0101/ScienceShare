@@ -59,7 +59,7 @@
                 <ul class="pl-4">
                   @foreach ($profile->user->comments as $comment)
                     <li>
-                      <a href="{{ route('posts.show', ['post' => $comment->post]) }}#comment{{$comment->id}}">
+                      <a href="{{ route('posts.show', ['post' => $comment->post]) }}#{{$comment->id}}">
                         {{ Str::limit($comment->text) }}
                       </a>
                     </li>

@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Comment::class, 'comment');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -124,6 +129,21 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $this->authorize('delete', $comment);
+        $comment->delete();
+        return redirect()->route('posts')->with('message', 'Comment Deleted');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Comment  $comment
+     * @return \Illuminate\Http\Response
+     */
+    public function apiDestroy(Comment $comment)
+    {
+        $this->authorize('delete', $comment);
+        $comment->delete();
+        return response()->json('Comment Deleted');
     }
 }

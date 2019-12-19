@@ -20,8 +20,8 @@ Route::redirect('posts', '/');
 Route::get('/', 'PostController@index')->name('posts');
 Route::get('post/create', 'PostController@create')->name('posts.create')->middleware('auth');
 Route::post('posts', 'PostController@store')->name('posts.store')->middleware('auth');
+Route::delete('post/{post}/delete', 'PostController@destroy')->name('posts.destroy');
 Route::get('post/{post}', 'PostController@show')->name('posts.show');
-Route::delete('post/{post}', 'PostController@destroy')->name('posts.destroy');
 
 // Tags
 Route::get('tag/{tag}/posts', 'TagController@posts')->name('tag.posts');
@@ -31,8 +31,8 @@ Route::redirect('tag/{tag}', 'tag/{tag}/posts');
 Route::get('user/{user}', 'ProfileController@show')->name('profiles.show');
 
 // Comments
-Route::post('comments/new', 'CommentController@apiStore')->name('new.comments')->middleware('auth');
-Route::delete('comments/{comment}', 'CommentController@destroy')->name('comments.destroy')->middleware('auth');
+Route::post('comments/new', 'CommentController@apiStore')->name('api.comments.create')->middleware('auth');
+Route::delete('comments/{comment}', 'CommentController@apiDestroy')->name('api.comments.destroy');
 
 // Route::get('/home/{name?}', function ($name = null) {
 //     return "This is $name's /home page";
