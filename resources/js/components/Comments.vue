@@ -6,7 +6,7 @@
         <div class="row">
           <div class="col-md-11 col-sm-9">
             <p>
-              <textarea class="form-control" v-model="commentText"></textarea>
+              <textarea id="comment_text" class="form-control" v-model="commentText"></textarea>
             </p>
           </div>
           <div class="col-md-1 col-sm-3">
@@ -69,7 +69,11 @@
           this.commentText = "";
         })
         .catch(error => {
-          console.log(error.response)
+          let errors = error.response.data.errors.text
+
+          errors.forEach(e => {
+            showNotification(e);
+          })
         })
       },
 

@@ -11261,3 +11261,127 @@ img {
   color: #000000;
 }
 
+.toast button {
+  color: var(--secondary-text-color);
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: inherit;
+  padding: 10px;
+}
+
+.toast button:hover {
+  color: #fff;
+}
+
+.toast .toast-text,
+.toast .toast-text_scrolled {
+  word-wrap: break-word;
+  font-weight: bold;
+  min-width: 50%;
+  padding: 20px 0 20px 10px;
+  max-width: calc(75% - 20px);
+}
+
+.toast .toast-text_scrolled {
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.16);
+}
+
+.toast .toast-buttons {
+  display: -webkit-box;
+  display: flex;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+.toast .toast-buttons::-webkit-scrollbar {
+  display: none;
+}
+
+.toast {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+  position: fixed;
+  padding: 0 10px;
+  width: calc(100% - 20px);
+  z-index: 1000;
+  color: white;
+  font-size: 14px;
+  background: #323232;
+  opacity: 1;
+  bottom: 0;
+  transform: translateY(0);
+  -webkit-transform: translateY(0);
+  -webkit-animation: slideInBottom 0.4s cubic-bezier(0, 0, 0.2, 1);
+  animation: slideInBottom 0.4s cubic-bezier(0, 0, 0.2, 1);
+}
+
+@-webkit-keyframes slideInBottom {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(300px);
+            transform: translateY(300px);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@keyframes slideInBottom {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(300px);
+            transform: translateY(300px);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+.toast-dismissed {
+  -webkit-transform: translateY(300px);
+          transform: translateY(300px);
+  -webkit-animation: slideOutBottom 0.4s cubic-bezier(0, 0, 1, 1);
+          animation: slideOutBottom 0.4s cubic-bezier(0, 0, 1, 1);
+}
+
+@-webkit-keyframes slideOutBottom {
+  from {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translateY(300px);
+            transform: translateY(300px);
+  }
+}
+
+@keyframes slideOutBottom {
+  from {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translateY(300px);
+            transform: translateY(300px);
+  }
+}
+

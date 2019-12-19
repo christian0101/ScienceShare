@@ -10,3 +10,9 @@ function previewFile(input)
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+let toastsView = new Toast();
+
+function showNotification (msg, duration, options) {
+   toastsView.create(msg, duration, options);
+}

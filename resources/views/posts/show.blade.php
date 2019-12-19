@@ -18,7 +18,7 @@
       <img src="{{ $post->featured_pic_path }}"></img>
     @endif
 
-    <p>{{ $post->content }}</p>
+    <p id="post_text">{{ $post->content }}</p>
     <p class="text-secondary">Published by
         <a href="{{ route('profiles.show', ['user' => $post->user]) }}">{{  $post->user->name }}</a>
         <span class="badge badge-secondary">

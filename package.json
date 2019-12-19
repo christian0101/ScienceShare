@@ -23,6 +23,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^16.0.0",
         "@types/bootstrap": "^4.3.1",
         "@voerro/vue-tagsinput": "^2.1.0",
         "popper.js": "^1.16.0",

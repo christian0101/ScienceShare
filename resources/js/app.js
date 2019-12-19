@@ -5,6 +5,7 @@
  */
 
 require('./bootstrap');
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 window.Vue = require('vue');
 
@@ -32,3 +33,11 @@ Vue.component('comments', require('./components/Comments.vue').default);
 const app = new Vue({
   el: '#app'
 });
+
+if (document.querySelector( '#post_text' )) {
+  ClassicEditor
+  .create( document.querySelector( '#post_text' ) )
+  .catch( error => {
+  console.error( error );
+  } );
+}

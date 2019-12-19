@@ -9,11 +9,9 @@
     <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
       @csrf
 
-      <h3><label>Title*</label>
-      <input class="form-control" type="text" name="title" value="{{ old('title') }}" /></h3>
-      <p><img id="preview" src="" /></p>
-      <p>Featured Picture: <input onchange="previewFile(this)" type="file" class="form-control" name="featured_pic" value="" accept="image/x-png,image/gif,image/jpeg,image/svg" /></p>
-      <p>Tags (space separated):
+      <h4><label>Title*</label>
+      <input class="form-control" type="text" name="title" value="{{ old('title') }}" /></h4>
+      <p><label>Tags (space separated):</label>
         <tags-input element-id="tags"
           :existing-tags="[
               { key: 1, value: 'Web Development' },
@@ -28,7 +26,9 @@
           :value={{ old('tags') ?? "[]" }}>
         </tags-input>
       </p>
-      <p>Content*: <textarea class="form-control" type="text" name="content">{{ old('content') }}</textarea></p>
+      <p><img id="preview" src="" /></p>
+      <p><label>Featured Picture:</label> <input onchange="previewFile(this)" type="file" class="form-control" name="featured_pic" value="" accept="image/x-png,image/gif,image/jpeg,image/svg" /></p>
+      <p><label>Content*:</label> <textarea id="post_text" class="form-control" type="text" name="content">{{ old('content') }}</textarea></p>
       <input class="btn btn-success" type="submit" value="Submit" />
       <a class="btn btn-danger" href="{{ route('posts') }}">Cancel</a>
 
