@@ -55,7 +55,7 @@
     },
 
     mounted() {
-      this.getComments('/api/post/'+this.postId+'/comments');
+      this.getComments('/api/comments/'+this.postId);
       this.createEditor('comment_text');
     },
 
@@ -102,11 +102,11 @@
 
       createEditor(id) {
         let el = document.getElementById(id);
-        console.log(el);
+        //console.log(el);
         if (el) {
           ClassicEditor
           .create(el, {
-            removePlugins: [ 'Table' ]
+            toolbar: ['undo', 'redo', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
           }).then(newEditor => {
             if (this.editor) {
                 this.editor.destroy();

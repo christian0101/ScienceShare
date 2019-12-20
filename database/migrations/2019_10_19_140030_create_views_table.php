@@ -15,7 +15,7 @@ class CreateViewsTable extends Migration
     {
         Schema::create('views', function (Blueprint $table) {
             $table->primary(['identifier', 'post_id'], 'identifier_post');
-            $table->string('identifier')->unique();
+            $table->string('identifier');
             $table->unsignedBigInteger('post_id');
             $table->timestamps();
 

@@ -9,13 +9,14 @@
     </div>
   @endauth
 
-  <div class="row">
+  <div id="posts" class="row">
       @foreach ($posts as $post)
-        <div align="center" class="col-1">
-              <button class="btn btn-success">up</button>
-              <h6>{{ $post->votes->sum('type') }}</h6>
-              <button class="btn btn-danger">down</button>
-        </div>
+        <vote :post-id="{{ $post->id }}"
+          @if( Auth::check())
+            :current-user="{{ Auth::user() }}"
+          @endif
+        >
+        </vote>
         <div class="col-11">
             <h3>
                 <a href="{{ route('posts.show', ['post' => $post]) }}">
@@ -26,13 +27,12 @@
                 <a href="{{ route('profiles.show', ['user' => $post->user]) }}">{{ $post->user->name }}</a>
                 on {{ $post->created_at->format('d M Y') }} / {{ $post->views->count() }} View(s) /
             </p>
-            <p> {{ Str::limit($post->content, 900) }} </p>
+            <p> {!! Str::limit($post->content, 900) !!} </p>
         </div>
       @endforeach
-
-    <div class="col-12">
-        {{ $posts->links() }}
-    </div>
+  </div>
+  <div class="col-12">
+      {{ $posts->links('vendor.pagination.bootstrap-4') }}
   </div>
 
 @endsection

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Tag;
+use App\View;
+use App\Picture;
+use App\Vote;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -30,6 +33,26 @@ class PostController extends Controller
     public function apiIndex()
     {
         return Post::latest()->get();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function apiPostTags(Post $post)
+    {
+        return $post->tags;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function apiPostVotes(Post $post)
+    {
+        return $post->votes()->sum('type');
     }
 
     /**
@@ -107,6 +130,13 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        // update post views
+        $uid = request()->ip();
+        $view = View::firstOrCreate(
+          ['identifier' => $uid, 'post_id' => $post->id],
+          ['identifier' => $uid, 'post_id' => $post->id]
+        );
+
         return view('posts.show', ['post' => $post]);
     }
 
@@ -131,6 +161,47 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function apiUpdate(Request $request, Post $post)
+    {
+      // validate data
+      $validatedData = $request->validate([
+        'title' => 'required|between:5,255',
+        'tags' => 'nullable|json',
+        'content' => 'required|min:10'
+      ]);
+
+      $post->title = $validatedData['title'];
+      $post->content = $validatedData['content'];
+      $post->save();
+
+      // save tags
+      $tags = json_decode($validatedData['tags']) ?? [];
+      foreach ($tags as $tag)
+      {
+          $tag_obj = Tag::firstOrNew(
+            ['name' => $tag->value],
+            ['name' => $tag->value]
+          );
+
+          if (!$tag_obj->exists) {
+            $tag_obj->save();
+          }
+
+          if (!$tag_obj->posts->contains($post)) {
+            $tag_obj->posts()->attach($post->id);
+          }
+      }
+
+      return response()->json('Post Updated');
     }
 
     /**

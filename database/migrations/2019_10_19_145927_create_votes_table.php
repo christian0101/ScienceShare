@@ -14,7 +14,7 @@ class CreateVotesTable extends Migration
     public function up()
     {
         Schema::create('votes', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->primary(['user_id', 'post_id'], 'vote');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('post_id');
             $table->tinyInteger('type');

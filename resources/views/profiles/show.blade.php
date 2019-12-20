@@ -5,18 +5,23 @@
 @section('content')
 
 <div id="profile">
-    <p id="profile_pic">{{ $profile->profile_pic_path }}</p>
-    <h2><b>{{ $profile->user->name }}</b>
-        @if ($profile->user == Auth::user())
-          <button type="button" class="btn btn-primary" name="button">
-            Edit Profile
-          </button>
-        @endif
-    </h2>
+    <h2><b>{{ $profile->user->name }}</b></h2>
     <p>Member since {{ $profile->created_at->format('d M Y') }}</p>
     <div id="info">
-        <h3><b>Bio</b></h3>
-        <p id="bio">{{ $profile->bio ?? 'No bio' }}</p>
+        <h3><b>Bio</b>
+          @if ($profile->user == Auth::user())
+            <button v-if="!editingBio" @click="createEditor" type="button" class="btn btn-primary" name="button">
+              Edit Bio
+            </button>
+          @endif
+        </h3>
+        <div class="mb-3">
+          <div id="bio">{!! $profile->bio ?? 'No bio' !!}</div>
+          <div class="btn-group mt-2">
+            <button v-if="editingBio" @click="updateBio({{ $profile->id }})" class="btn btn-success">Save</button>
+            <button v-if="editingBio" @click="cancelEdit" class="btn btn-danger">Cancel</button>
+          </div>
+        </div>
         <h3><b>Statistics</b></h3>
         <div class="row">
             <div class="col-md-3">
@@ -48,7 +53,7 @@
                   @foreach ($profile->user->posts as $post)
                     <li>
                       <a href="{{ route('posts.show', ['post' => $post]) }}">
-                        {{ $post->title }}
+                        {!! $post->title !!}
                       </a>
                     </li>
                   @endforeach

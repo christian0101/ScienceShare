@@ -27,7 +27,7 @@
         </tags-input>
       </p>
       <p><img id="preview" src="" /></p>
-      <p><label>Featured Picture:</label> <input onchange="previewFile(this)" type="file" class="form-control" name="featured_pic" value="" accept="image/x-png,image/gif,image/jpeg,image/svg" /></p>
+      <p><label>Featured Pictures:</label> <input onchange="previewFile(this)" type="file" class="form-control" name="featured_pic" value="" accept="image/x-png,image/gif,image/jpeg,image/svg" /></p>
       <p><label>Content*:</label> <textarea id="post_text" class="form-control" type="text" name="content">{{ old('content') }}</textarea></p>
       <input class="btn btn-success" type="submit" value="Submit" />
       <a class="btn btn-danger" href="{{ route('posts') }}">Cancel</a>

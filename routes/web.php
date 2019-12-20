@@ -13,7 +13,7 @@
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 // Posts
 Route::redirect('posts', '/');
@@ -22,6 +22,7 @@ Route::get('post/create', 'PostController@create')->name('posts.create')->middle
 Route::post('posts', 'PostController@store')->name('posts.store')->middleware('auth');
 Route::delete('posts/{post}/delete', 'PostController@destroy')->name('posts.destroy');
 Route::get('posts/{post}', 'PostController@show')->name('posts.show');
+Route::put('posts/{post}/update', 'PostController@apiUpdate')->name('api.posts.update');
 
 // Tags
 Route::get('tags/{tag}/posts', 'TagController@posts')->name('tag.posts');
@@ -29,12 +30,17 @@ Route::redirect('tags/{tag}', 'tags/{tag}/posts');
 
 // Users Profiles
 Route::get('user/{user}', 'ProfileController@show')->name('profiles.show');
+Route::put('profiles/{profile}/update', 'ProfileController@apiUpdate')->name('api.profiles.update');
 
 // Comments
 Route::post('comments/new', 'CommentController@apiStore')->name('api.comments.create')->middleware('auth');
 Route::delete('comments/{comment}', 'CommentController@apiDestroy')->name('api.comments.destroy');
 Route::put('comments/{comment}/update', 'CommentController@apiUpdate')->name('api.comments.update');
 
-// Route::get('/home/{name?}', function ($name = null) {
-//     return "This is $name's /home page";
-// });
+// Votes
+Route::post('votes/{post}/new', 'VoteController@apiStore')->name('api.votes.new')->middleware('auth');
+Route::put('votes/{post}/update', 'VoteController@apiUpdate')->name('api.votes.update');
+
+Route::get('/tinymce_test', function () {
+    return view('mceImageUpload::example');
+});

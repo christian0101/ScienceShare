@@ -74,6 +74,26 @@ class ProfileController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Profile  $profile
+     * @return \Illuminate\Http\Response
+     */
+    public function apiUpdate(Request $request, Profile $profile)
+    {
+        // validate data
+        $validatedData = $request->validate([
+          'bio' => 'required|min:5'
+        ]);
+
+        $profile->bio = $validatedData['bio'];
+        $profile->save();
+
+        return response()->json('Profile Updated');
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Profile  $profile

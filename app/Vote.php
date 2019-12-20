@@ -12,7 +12,7 @@ class Vote extends Model
      * @var array
      */
     protected $fillable = [
-        'type'
+        'type', 'user_id', 'post_id'
     ];
 
     public function user()

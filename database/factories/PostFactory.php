@@ -9,6 +9,6 @@ $factory->define(Post::class, function (Faker $faker) {
     return [
         'user_id' => App\User::pluck('id')->random(),
         'title' => $faker->realText(rand(50, 100)).'..',
-        'content' => $faker->realText(rand(600, 10000))
+        'content' => $faker->realText(rand(1000, 10000))
     ];
 });
