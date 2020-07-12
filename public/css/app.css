@@ -11700,3 +11700,7 @@ img {
           justify-content: center;
 }
 
+[v-cloak] {
+  display: none;
+}
+

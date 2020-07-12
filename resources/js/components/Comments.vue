@@ -20,7 +20,7 @@
           </div>
         </div>
         <p :id="'comment_'+comment.id+'_text'" v-html="comment.text">
-          <div v-if="editing == ('comment_'+comment.id+'_text')" class="btn-group mt-2">
+          <div v-if="editing == ('comment_'+comment.id+'_text')" class="btn-group mt-2" v-cloak>
             <button @click="update(comment.id)" class="btn btn-success">Save</button>
             <button @click="cancelEdit" class="btn btn-danger">Cancel</button>
           </div>

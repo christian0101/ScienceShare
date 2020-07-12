@@ -6,7 +6,7 @@
 
   <div id="post">
     <h2 id="title" v-if="!editingPost">{{ $post->title }}</h2>
-    <input v-model="title" v-if="editingPost" class="h2 form-control form-control-lg" type="text" name="title" />
+    <input v-model="title" v-if="editingPost" class="h2 form-control form-control-lg" type="text" name="title" v-cloak />
     <h5 v-if="!editingPost"><span>Tag(s):</span>
       @foreach ($post->tags as $tag)
           <a href="{{ route('tag.posts', ['tag' => $tag]) }}" class="badge badge-primary">
@@ -14,7 +14,7 @@
           </a>
       @endforeach
     </h5>
-    <h5 v-if="editingPost">Tag(s):
+    <h5 v-if="editingPost" v-cloak>Tag(s):
       <tags-input element-id="tags"
         :existing-tags="[
             { key: 1, value: 'Web Development' },

@@ -7,7 +7,7 @@
  */
 
 <template>
-    <div class="tags-input-root">
+    <div class="tags-input-root" v-cloak>
         <div :class="wrapperClass + ' tags-input'">
             <h5 class="mb-0">
               <span class="badge badge-primary"

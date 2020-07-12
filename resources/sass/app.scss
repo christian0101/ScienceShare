@@ -124,3 +124,7 @@ img {
 .pagination {
    justify-content: center;
 }
+
+[v-cloak] {
+  display: none;
+}

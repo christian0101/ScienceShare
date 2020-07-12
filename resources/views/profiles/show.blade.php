@@ -10,12 +10,12 @@
     <div id="info">
         <h3><b>Bio</b>
           @if ($profile->user == Auth::user())
-            <button v-if="!editingBio" @click="createEditor" type="button" class="btn btn-primary" name="button">
+            <button v-if="!editingBio" @click="createEditor" type="button" class="btn btn-primary" name="button" v-cloak>
               Edit Bio
             </button>
           @endif
         </h3>
-        <div class="mb-3">
+        <div class="mb-3" v-cloak>
           <div id="bio">{!! $profile->bio ?? 'No bio' !!}</div>
           <div class="btn-group mt-2">
             <button v-if="editingBio" @click="updateBio({{ $profile->id }})" class="btn btn-success">Save</button>
@@ -65,7 +65,7 @@
                   @foreach ($profile->user->comments as $comment)
                     <li>
                       <a href="{{ route('posts.show', ['post' => $comment->post]) }}#{{$comment->id}}">
-                        {{ Str::limit($comment->text) }}
+                        {!! Str::limit($comment->text) !!}
                       </a>
                     </li>
                   @endforeach
