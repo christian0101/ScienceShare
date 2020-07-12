@@ -24,7 +24,7 @@ Furthemore, basic analytics available for posts, such as views, votes and commen
 `` php artisan migrate:fresh --seed ``
 
 ### Build (Webpack)
-`` npm run build ``
+`` npm run dev ``
 
 ## Run
 `` php artisan serve  ``
