@@ -19,3 +19,5 @@ yarn-error.log
 *.gz
 *.toc
 *.pygtex
+composer.lock
+package-lock.json
